@@ -1,0 +1,122 @@
+in-depth outline
+
+1. Data Collection Strategy
+Primary Target Variable:
+
+PPIDF01 Index (PPI Portfolio Management, NSA) from BLS/FRED
+
+Potential Predictor Variables:
+
+Market Returns: S&P 500, Russell 2000, NASDAQ, VIX (volatility)
+Bond Market: 10Y Treasury yield, yield curve spreads, corporate bond spreads
+Fund Flows: ETF/mutual fund flow data, equity fund flows
+Macro Risk Indicators: Dollar index, commodity prices, credit spreads
+Market Microstructure: Trading volumes, bid-ask spreads if available
+Economic Indicators: GDP growth, employment data, inflation expectations
+
+2. Technical Architecture
+Data Pipeline:
+
+Use FRED API for most macro/financial time series
+BLS API specifically for PPI data validation
+Polars for all data manipulation (faster than pandas for time series operations)
+Create modular functions for API calls with rate limiting
+Implement data caching to avoid repeated API calls
+
+3. Feature Engineering Approach
+Lag Structure:
+
+Test various lag lengths (1-12 months) for all predictors
+Portfolio management fees often respond with delays to market conditions
+
+Derived Features:
+
+Rolling volatilities (1M, 3M, 6M windows)
+Moving averages and momentum indicators
+Regime indicators (bull/bear market flags)
+Interaction terms between market stress and fund flows
+
+Temporal Features:
+
+Month-of-year effects (even though NSA, some patterns may exist)
+Quarter-end effects (rebalancing periods)
+
+4. Modeling Strategy
+Model Hierarchy:
+
+Baseline Models: Simple autoregressive (AR) models
+Linear Models: Ridge/Lasso with lagged features
+Tree-Based: Random Forest, XGBoost for non-linear relationships
+Time Series Specific: Vector Autoregression (VAR), Dynamic Factor Models
+
+Validation Framework:
+
+Time series cross-validation (expanding window)
+Out-of-sample testing on most recent 12-24 months
+Walk-forward validation for real-time performance assessment
+
+5. Analysis Framework
+Exploratory Phase:
+
+Correlation analysis between PPI MoM% and potential predictors
+Lead-lag relationship analysis
+Regime-dependent behavior (recession vs expansion periods)
+Structural break testing
+
+Model Diagnostics:
+
+Feature importance analysis
+Residual analysis for autocorrelation
+Forecast accuracy metrics (RMSE, MAE, directional accuracy)
+Economic significance testing
+
+6. Jupyter Notebook Structure
+Notebook 1: Data Collection & Cleaning
+
+API setup and data retrieval
+Data quality checks and outlier treatment
+Initial time series visualization
+
+Notebook 2: Exploratory Data Analysis
+
+Correlation matrices and heatmaps
+Time series decomposition
+Regime analysis and structural breaks
+
+Notebook 3: Feature Engineering
+
+Lag creation and transformation
+Rolling statistics and technical indicators
+Feature selection analysis
+
+Notebook 4: Modeling & Validation
+
+Model comparison framework
+Cross-validation results
+Forecast evaluation and backtesting
+
+Notebook 5: Real-time Implementation
+
+Production-ready forecasting pipeline
+Automated data updates and retraining
+Dashboard for monitoring model performance
+
+7. Key Considerations
+Data Frequency Alignment:
+
+Ensure all variables are monthly frequency
+Handle different release schedules (some data released with delays)
+Account for revision patterns in economic data
+
+Economic Intuition:
+
+Portfolio management fees tied to AUM levels
+AUM affected by both market performance and fund flows
+Fee compression trends in the industry
+Regulatory changes affecting fee structures
+
+Real-time Challenges:
+
+Data availability lags (some indicators released with 1-2 month delays)
+Model stability during market stress periods
+Computational efficiency for frequent retrainin

@@ -1,0 +1,18 @@
+PPI Securities And Portfolio Management Modeling
+
+Objective: 
+Forecast the month-on-month percentage change (MoM%) in the PPI for portfolio management services (unadjusted).
+
+Scope:
+Explain the monthly fluctuations in portfolio pricing using market returns, macro risk, or fund flows. No seasonal adjustment is necessary–focus on NSA.
+
+Guiding Question:
+What variables help predict MoM% in portfolio management PPI? What modeling approach best captures real-time dynamics in this fee-based series?
+
+Key Ticker:
+- PPI Portfolio Management (NSA): PPIDF01 Index
+
+Starting ResourceS:
+- bls.gov
+- fred.stlouisfed.org
+- bloomberg.com
