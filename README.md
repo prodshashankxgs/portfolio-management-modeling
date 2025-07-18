@@ -7,108 +7,78 @@ This project aims to forecast month-on-month percentage changes in the Producer 
 **Objective**: Predict MoM% changes using market returns, macro risk factors, and fund flows  
 **Focus**: Real-time dynamics in fee-based pricing series (no seasonal adjustment)
 
-## Phase One: Data Collection Strategy ✅
+## Data Sources
+- **Primary Target**: PCU5239252392 (PPI Portfolio Management Services) from FRED
+- **Predictors**: Market returns, bond yields, fund flows, macro indicators
+- **APIs**: FRED API, BLS API for economic data
 
-### Completed Components
-
-#### 1. **Data Collection Infrastructure**
-- `data_collection.py`: Modular data collection class with:
-  - FRED API integration with rate limiting
-  - Intelligent caching system (1-day cache expiry)
-  - Error handling and retry logic
-  - Polars-based data processing for performance
-
-#### 2. **Data Sources Implemented**
-- **Target Variable**: PPIDF01 (PPI Portfolio Management, NSA)
-- **Market Returns**: S&P 500, NASDAQ, Russell 2000, VIX
-- **Bond Markets**: 10Y/2Y/3M Treasury yields, corporate spreads
-- **Macro Indicators**: Dollar index, oil, gold, unemployment, CPI
-
-#### 3. **Technical Architecture**
-- **Environment**: Python virtual environment with dependencies
-- **Data Processing**: Polars for high-performance time series operations
-- **API Management**: Rate-limited calls with automatic caching
-- **Storage**: JSON-based data persistence with DataFrame serialization
-
-#### 4. **Jupyter Notebook**
-- `01_data_collection_cleaning.ipynb`: Complete Phase One workflow
-- Data quality assessment functions
-- Initial visualization of target variable
-- Comprehensive data collection pipeline
+## Project Structure
+```
+├── data_collection.py              # Modular data collection with caching
+├── exploratory_analysis.py         # EDA and feature engineering (Polars)
+├── modeling_framework.py           # ML models with time series validation
+├── 01_data_collection_polars.ipynb # Data collection notebook
+├── 03_modeling_validation.ipynb    # Modeling and validation notebook
+├── .env                            # API keys (create from .env.example)
+├── requirements.txt                # Essential dependencies only
+├── data_cache/                     # Cached data storage
+└── README.md                       # This file
+```
 
 ## Setup Instructions
 
 ### 1. Environment Setup
 ```bash
-# Activate virtual environment
-source .venv/bin/activate
+# Create virtual environment
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
-# Install dependencies (already done)
+# Install dependencies
 pip install -r requirements.txt
 ```
 
 ### 2. API Configuration
-1. Get a FRED API key from: https://fred.stlouisfed.org/docs/api/api_key.html
-2. Create a `.env` file in the project root:
-```bash
-cp .env.example .env
+Create a `.env` file with your API keys:
 ```
-3. Add your API key to `.env`:
-```
-FRED_API_KEY=your_actual_api_key_here
+FRED_API_KEY=your_fred_api_key_here
+BLS_API_KEY=your_bls_api_key_here
 ```
 
-### 3. Run Phase One
+Get your FRED API key from: https://fred.stlouisfed.org/docs/api/api_key.html
+
+### 3. Start Jupyter Notebook
 ```bash
-# Start Jupyter notebook
 jupyter notebook
-
-# Open and run: 01_data_collection_cleaning.ipynb
-```
-
-## Project Structure
-```
-Portfolio Management Modeling/
-├── .env                           # API keys
-├── requirements.txt               # Python dependencies
-├── data_collection.py             # Core data collection module
-├── 01_data_collection_cleaning.ipynb  # Phase One notebook
-├── data_cache/                    # Cached API responses
-├── project_outline.txt            # Original project outline
-├── in-depth_itinerary.txt         # Detailed project phases
-└── README.md                      # This file
 ```
 
 ## Key Features
 
-### Data Collection Module (`data_collection.py`)
-- **Modular Design**: Separate methods for different data categories
-- **Caching**: Automatic 1-day cache to avoid redundant API calls
-- **Rate Limiting**: Respects API rate limits (100ms between calls)
-- **Error Handling**: Graceful handling of missing data and API errors
-- **Polars Integration**: High-performance DataFrame operations
+### Pure Polars Implementation
+- **2-5x faster** than pandas for large datasets
+- **Memory efficient** with lazy evaluation
+- **Type safe** with compile-time optimizations
+- **Modern syntax** with method chaining
 
-### Data Sources
-| Category | Series | Description |
-|----------|--------|-------------|
-| Target | PPIDF01 | PPI Portfolio Management (NSA) |
-| Market | SP500, NASDAQCOM, VIXCLS | Stock indices and volatility |
-| Bonds | DGS10, DGS2, DGS3MO | Treasury yield curve |
-| Macro | DTWEXBGS, DCOILWTICO, UNRATE | Dollar, oil, employment |
+### Comprehensive Data Pipeline
+- **Automated caching** to minimize API calls
+- **Rate limiting** to respect API constraints
+- **Error handling** with retry mechanisms
+- **Data validation** and quality checks
 
-## Next Steps: Phase Two
+### Advanced Modeling Framework
+- **Time series cross-validation** with expanding windows
+- **Multiple model types**: AR, Ridge, Random Forest
+- **Feature engineering** with lagged variables
+- **Performance metrics** including directional accuracy
 
-### Upcoming Components
-1. **Exploratory Data Analysis**
-   - Correlation analysis between PPI and predictors
-   - Lead-lag relationship identification
-   - Regime-dependent behavior analysis
-   - Structural break testing
+## Getting Started
 
-2. **Feature Engineering**
-   - Lag structure optimization (1-12 months)
-   - Rolling volatilities and momentum indicators
-   - Regime indicators and interaction terms
+### 1. Data Collection
+Open `01_data_collection_polars.ipynb` to:
+- Fetch PPI data using the correct ticker (PCU5239252392)
+- Collect predictor variables from FRED/BLS APIs
+- Cache data for efficient reuse
+- Perform initial data quality checks
    - Temporal features (month/quarter effects)
 
 3. **Initial Modeling**
