@@ -24,17 +24,20 @@ class ExploratoryAnalyzer:
     def load_data(self) -> bool:
         """Load all Parquet data files."""
         if not self.data_dir.exists():
-            print(f"⚠️ Data directory {self.data_dir} not found.")
+            print(f"warning: data directory {self.data_dir} not found.")
             return False
         
         for file in self.data_dir.glob("*.parquet"):
             try:
                 df = pl.read_parquet(file)
+                # Convert date column from string to date if it exists
+                if 'date' in df.columns and df['date'].dtype == pl.Utf8:
+                    df = df.with_columns(pl.col('date').str.to_date())
                 key = file.stem
                 self.data[key] = df
-                print(f"✓ Loaded {key}: {df.shape}")
+                print(f"loaded {key}: {df.shape}")
             except Exception as e:
-                print(f"⚠️ Error loading {file}: {e}")
+                print(f"warning: error loading {file}: {e}")
         
         # Extract target data
         self.target_df = self.data.get('target_ppidf01')
@@ -75,15 +78,15 @@ class ExploratoryAnalyzer:
                 predictor_dfs.append(processed_df)
                 
             except Exception as e:
-                print(f"⚠️ Error processing {key}: {e}")
+                print(f"warning: error processing {key}: {e}")
         
         if not predictor_dfs:
             return None
         
-        # Join all predictors
+        # Join all predictors using coalesce to handle multiple date columns
         combined_df = predictor_dfs[0]
         for df in predictor_dfs[1:]:
-            combined_df = combined_df.join(df, on='date', how='outer')
+            combined_df = combined_df.join(df, on='date', how='full', coalesce=True)
         
         return combined_df.sort('date')
     
@@ -143,27 +146,27 @@ class ExploratoryAnalyzer:
     
     def run_full_analysis(self) -> Dict:
         """Run complete exploratory analysis."""
-        print("Starting Phase Two: Exploratory Data Analysis")
+        print("starting phase two: exploratory data analysis")
         print("=" * 50)
         
         # Load data
         if not self.load_data():
-            return {"error": "Failed to load data"}
+            return {"error": "failed to load data"}
         
         # Prepare target
         target_processed = self.prepare_target_variable()
         if target_processed is None:
-            return {"error": "Failed to prepare target variable"}
+            return {"error": "failed to prepare target variable"}
         
         # Prepare predictors
         predictors_df = self.prepare_predictors()
         if predictors_df is None:
-            return {"error": "Failed to prepare predictors"}
+            return {"error": "failed to prepare predictors"}
         
         # Calculate correlations
         corr_df = self.calculate_correlations(target_processed, predictors_df)
         if corr_df is None:
-            return {"error": "Failed to calculate correlations"}
+            return {"error": "failed to calculate correlations"}
         
         # Lead-lag analysis for top predictors
         top_predictors = corr_df.head(5)['variable'].to_list()
@@ -197,9 +200,9 @@ if __name__ == "__main__":
     results = analyzer.run_full_analysis()
     
     if "error" in results:
-        print(f"Error: {results['error']}")
+        print(f"error: {results['error']}")
     else:
-        print(f"\n✓ Analysis complete!")
-        print(f"Data shape: {results['data_shape']}")
-        print(f"Top correlations:")
+        print(f"\nanalysis complete!")
+        print(f"data shape: {results['data_shape']}")
+        print(f"top correlations:")
         print(results['correlations'].head(10))

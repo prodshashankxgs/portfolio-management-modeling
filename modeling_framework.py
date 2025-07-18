@@ -274,26 +274,26 @@ class TimeSeriesModeler:
     def run_model_comparison(self, df: pl.DataFrame, target_col: str = 'mom_pct') -> Dict[str, Any]:
         """Run comprehensive model comparison."""
         
-        print("Starting Phase Three: Modeling & Validation")
+        print("starting phase three: modeling & validation")
         print("=" * 50)
         
         # Get feature columns (exclude date and target)
         feature_cols = [col for col in df.columns if col not in ['date', target_col]]
         
-        print(f"Target: {target_col}")
-        print(f"Features available: {len(feature_cols)}")
-        print(f"Data shape: {df.shape}")
+        print(f"target: {target_col}")
+        print(f"features available: {len(feature_cols)}")
+        print(f"data shape: {df.shape}")
         
         # Create lagged features
-        print("\nCreating lagged features...")
+        print("\ncreating lagged features...")
         feature_df = self.create_lagged_features(df, target_col, feature_cols[:10], max_lags=3)  # Limit for performance
         
-        print(f"Enhanced feature set: {feature_df.shape}")
+        print(f"enhanced feature set: {feature_df.shape}")
         
         # Split data
         train_df, val_df, test_df = self.time_series_split(feature_df)
         
-        print(f"Train: {train_df.shape}, Val: {val_df.shape}, Test: {test_df.shape}")
+        print(f"train: {train_df.shape}, val: {val_df.shape}, test: {test_df.shape}")
         
         # Get all feature columns after lagging
         all_features = [col for col in feature_df.columns if col not in ['date', target_col]]
@@ -302,7 +302,7 @@ class TimeSeriesModeler:
         results = {}
         
         # 1. Baseline AR Model
-        print("\n1. Fitting Baseline AR Model...")
+        print("\n1. fitting baseline ar model...")
         ar_result = self.fit_baseline_ar_model(train_df, target_col)
         if "error" not in ar_result:
             ar_pred = self.predict_model(ar_result, test_df, target_col)
@@ -311,10 +311,10 @@ class TimeSeriesModeler:
                 if len(y_test) == len(ar_pred):
                     ar_metrics = self.evaluate_model(y_test, ar_pred)
                     results["AR_Baseline"] = {**ar_result, **ar_metrics}
-                    print(f"   AR Model RMSE: {ar_metrics['rmse']:.4f}")
+                    print(f"   ar model rmse: {ar_metrics['rmse']:.4f}")
         
         # 2. Ridge Regression
-        print("\n2. Fitting Ridge Regression...")
+        print("\n2. fitting ridge regression...")
         ridge_result = self.fit_ridge_model(train_df, target_col, all_features[:20])  # Limit features
         if "error" not in ridge_result:
             ridge_pred = self.predict_model(ridge_result, test_df, target_col)
@@ -323,10 +323,10 @@ class TimeSeriesModeler:
                 if len(y_test) == len(ridge_pred):
                     ridge_metrics = self.evaluate_model(y_test, ridge_pred)
                     results["Ridge"] = {**ridge_result, **ridge_metrics}
-                    print(f"   Ridge RMSE: {ridge_metrics['rmse']:.4f}")
+                    print(f"   ridge rmse: {ridge_metrics['rmse']:.4f}")
         
         # 3. Random Forest
-        print("\n3. Fitting Random Forest...")
+        print("\n3. fitting random forest...")
         rf_result = self.fit_random_forest(train_df, target_col, all_features[:15])  # Limit features
         if "error" not in rf_result:
             rf_pred = self.predict_model(rf_result, test_df, target_col)
@@ -335,7 +335,7 @@ class TimeSeriesModeler:
                 if len(y_test) == len(rf_pred):
                     rf_metrics = self.evaluate_model(y_test, rf_pred)
                     results["Random_Forest"] = {**rf_result, **rf_metrics}
-                    print(f"   Random Forest RMSE: {rf_metrics['rmse']:.4f}")
+                    print(f"   random forest rmse: {rf_metrics['rmse']:.4f}")
         
         return {
             "results": results,
@@ -350,17 +350,17 @@ class TimeSeriesModeler:
     def print_model_summary(self, comparison_results: Dict[str, Any]):
         """Print comprehensive model comparison summary."""
         
-        print("\nMODEL COMPARISON SUMMARY")
+        print("\nmodel comparison summary")
         print("=" * 60)
         
         results = comparison_results["results"]
         
         if not results:
-            print("No successful model results to display.")
+            print("no successful model results to display.")
             return
         
         # Create summary table
-        print(f"{'Model':<15} {'RMSE':<8} {'MAE':<8} {'Dir.Acc':<8} {'Features':<10}")
+        print(f"{'model':<15} {'rmse':<8} {'mae':<8} {'dir.acc':<8} {'features':<10}")
         print("-" * 60)
         
         for model_name, model_result in results.items():
@@ -373,12 +373,12 @@ class TimeSeriesModeler:
         
         # Best model
         best_model = min(results.items(), key=lambda x: x[1].get('rmse', float('inf')))
-        print(f"\n🏆 Best Model: {best_model[0]} (RMSE: {best_model[1]['rmse']:.4f})")
+        print(f"\nbest model: {best_model[0]} (rmse: {best_model[1]['rmse']:.4f})")
         
         # Feature importance for tree models
         for model_name, model_result in results.items():
             if 'feature_importance' in model_result:
-                print(f"\n📊 {model_name} - Top 10 Features:")
+                print(f"\n{model_name} - top 10 features:")
                 importance = model_result['feature_importance']
                 sorted_features = sorted(importance.items(), key=lambda x: x[1], reverse=True)
                 for i, (feature, imp) in enumerate(sorted_features[:10]):
@@ -399,4 +399,4 @@ if __name__ == "__main__":
         # Print summary
         modeler.print_model_summary(results)
     else:
-        print("Failed to load analysis data. Please run Phase Two first.")
+        print("failed to load analysis data. please run phase two first.")

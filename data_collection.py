@@ -75,9 +75,9 @@ class DataCollector:
         cache_path = self._get_cache_path(series_id, source)
         try:
             with open(cache_path, 'w') as f:
-                json.dump(data, f, indent=2)
+                json.dump(data, f, indent=2, default=str)
         except IOError as e:
-            print(f"Warning: Could not save to cache: {e}")
+            print(f"warning: could not save to cache: {e}")
     
     def get_fred_data(self, series_id: str, start_date: str = "2000-01-01", 
                      end_date: Optional[str] = None, use_cache: bool = True) -> pl.DataFrame:
@@ -157,7 +157,7 @@ class DataCollector:
         Returns:
             Polars DataFrame with PPI data
         """
-        print("Fetching target variable: PPI for Portfolio Management Services")
+        print("fetching target variable: ppi for portfolio management services")
         return self.get_fred_data('PCU5239252392', start_date='2000-01-01')
     
     def get_market_returns_data(self) -> Dict[str, pl.DataFrame]:
@@ -178,11 +178,11 @@ class DataCollector:
         
         for name, series_id in market_series.items():
             try:
-                print(f"Fetching {name} data...")
+                print(f"fetching {name} data...")
                 df = self.get_fred_data(series_id, start_date='2000-01-01')
                 market_data[name] = df
             except Exception as e:
-                print(f"Warning: Could not fetch {name} ({series_id}): {e}")
+                print(f"warning: could not fetch {name} ({series_id}): {e}")
                 
         return market_data
     
@@ -204,11 +204,11 @@ class DataCollector:
         
         for name, series_id in bond_series.items():
             try:
-                print(f"Fetching {name} data...")
+                print(f"fetching {name} data...")
                 df = self.get_fred_data(series_id, start_date='2000-01-01')
                 bond_data[name] = df
             except Exception as e:
-                print(f"Warning: Could not fetch {name} ({series_id}): {e}")
+                print(f"warning: could not fetch {name} ({series_id}): {e}")
                 
         return bond_data
     
@@ -231,11 +231,11 @@ class DataCollector:
         
         for name, series_id in macro_series.items():
             try:
-                print(f"Fetching {name} data...")
+                print(f"fetching {name} data...")
                 df = self.get_fred_data(series_id, start_date='2000-01-01')
                 macro_data[name] = df
             except Exception as e:
-                print(f"Warning: Could not fetch {name} ({series_id}): {e}")
+                print(f"warning: could not fetch {name} ({series_id}): {e}")
                 
         return macro_data
     
@@ -246,7 +246,7 @@ class DataCollector:
         Returns:
             Dictionary containing all collected data
         """
-        print("Starting comprehensive data collection for Phase One...")
+        print("starting comprehensive data collection for phase one...")
         
         all_data = {}
         
@@ -262,7 +262,7 @@ class DataCollector:
         # Macro indicators
         all_data['macro_indicators'] = self.get_macro_indicators()
         
-        print("Data collection complete!")
+        print("data collection complete!")
         return all_data
     
     def save_collected_data(self, data: Dict, filename: str = "collected_data.json"):
@@ -294,7 +294,7 @@ class DataCollector:
         with open(output_path, 'w') as f:
             json.dump(serializable_data, f, indent=2, default=str)
         
-        print(f"Data saved to {output_path}")
+        print(f"data saved to {output_path}")
 
 
 if __name__ == "__main__":
@@ -308,8 +308,8 @@ if __name__ == "__main__":
     collector.save_collected_data(all_data)
     
     # Print summary
-    print("\nData Collection Summary:")
-    print(f"Target variable shape: {all_data['target'].shape}")
+    print("\ndata collection summary:")
+    print(f"target variable shape: {all_data['target'].shape}")
     
     for category, data_dict in all_data.items():
         if category != 'target' and isinstance(data_dict, dict):
