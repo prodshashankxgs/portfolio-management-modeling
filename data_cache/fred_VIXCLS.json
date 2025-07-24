@@ -32243,5 +32243,20 @@
     "date": "2025-07-17",
     "value": 16.52,
     "series_id": "VIXCLS"
+  },
+  {
+    "date": "2025-07-18",
+    "value": 16.41,
+    "series_id": "VIXCLS"
+  },
+  {
+    "date": "2025-07-21",
+    "value": 16.65,
+    "series_id": "VIXCLS"
+  },
+  {
+    "date": "2025-07-22",
+    "value": 16.5,
+    "series_id": "VIXCLS"
   }
 ]

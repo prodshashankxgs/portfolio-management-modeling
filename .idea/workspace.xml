@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9350be8-21c7-4430-b6e0-5e7eb69ddb65" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/01_data_collection_cleaning.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/01_data_collection_cleaning.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/01_data_collection_polars.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/01_data_collection_polars.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/03_modeling_validation.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/03_modeling_validation.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_cache/fred_BAMLC0A0CM.json" beforeDir="false" afterPath="$PROJECT_DIR$/data_cache/fred_BAMLC0A0CM.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_cache/fred_DGS10.json" beforeDir="false" afterPath="$PROJECT_DIR$/data_cache/fred_DGS10.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_cache/fred_DGS2.json" beforeDir="false" afterPath="$PROJECT_DIR$/data_cache/fred_DGS2.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_cache/fred_DGS3MO.json" beforeDir="false" afterPath="$PROJECT_DIR$/data_cache/fred_DGS3MO.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_cache/fred_DTWEXBGS.json" beforeDir="false" afterPath="$PROJECT_DIR$/data_cache/fred_DTWEXBGS.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_cache/fred_NASDAQCOM.json" beforeDir="false" afterPath="$PROJECT_DIR$/data_cache/fred_NASDAQCOM.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_cache/fred_SP500.json" beforeDir="false" afterPath="$PROJECT_DIR$/data_cache/fred_SP500.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_cache/fred_VIXCLS.json" beforeDir="false" afterPath="$PROJECT_DIR$/data_cache/fred_VIXCLS.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_cache/phase_one_collected_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data_cache/phase_one_collected_data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modeling_framework.py" beforeDir="false" afterPath="$PROJECT_DIR$/modeling_framework.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +84,7 @@
       <workItem from="1752861454335" duration="1512000" />
       <workItem from="1752862977053" duration="263000" />
       <workItem from="1752863295804" duration="335000" />
+      <workItem from="1753282769344" duration="330000" />
     </task>
     <servers />
   </component>

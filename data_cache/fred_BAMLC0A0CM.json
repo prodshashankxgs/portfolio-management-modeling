@@ -33333,5 +33333,20 @@
     "date": "2025-07-17",
     "value": 0.8,
     "series_id": "BAMLC0A0CM"
+  },
+  {
+    "date": "2025-07-18",
+    "value": 0.8,
+    "series_id": "BAMLC0A0CM"
+  },
+  {
+    "date": "2025-07-21",
+    "value": 0.8,
+    "series_id": "BAMLC0A0CM"
+  },
+  {
+    "date": "2025-07-22",
+    "value": 0.81,
+    "series_id": "BAMLC0A0CM"
   }
 ]

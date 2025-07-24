@@ -31933,5 +31933,20 @@
     "date": "2025-07-16",
     "value": 4.41,
     "series_id": "DGS3MO"
+  },
+  {
+    "date": "2025-07-17",
+    "value": 4.41,
+    "series_id": "DGS3MO"
+  },
+  {
+    "date": "2025-07-18",
+    "value": 4.4,
+    "series_id": "DGS3MO"
+  },
+  {
+    "date": "2025-07-21",
+    "value": 4.41,
+    "series_id": "DGS3MO"
   }
 ]

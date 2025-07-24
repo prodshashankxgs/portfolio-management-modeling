@@ -18,7 +18,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from sklearn.preprocessing import StandardScaler
 import warnings
-warnings.filterwarnings('ignore')
+
+warnings.filterwarnings('ignore') # i should probably get rid of this
 
 class TimeSeriesModeler:
     """
@@ -253,7 +254,7 @@ class TimeSeriesModeler:
         
         return model.predict(X_test)
     
-    def evaluate_model(self, y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
+    def evaluate_model(self, y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, float]:
         """Calculate evaluation metrics."""
         
         rmse = np.sqrt(mean_squared_error(y_true, y_pred))
@@ -271,7 +272,7 @@ class TimeSeriesModeler:
             "n_predictions": len(y_true)
         }
     
-    def run_model_comparison(self, df: pl.DataFrame, target_col: str = 'mom_pct') -> Dict[str, Any]:
+    def run_model_comparison(self, df: pl.DataFrame, target_col: str = 'mom_pct') -> dict[str, Any]:
         """Run comprehensive model comparison."""
         
         print("starting phase three: modeling & validation")
@@ -347,7 +348,7 @@ class TimeSeriesModeler:
             "feature_count": len(all_features)
         }
     
-    def print_model_summary(self, comparison_results: Dict[str, Any]):
+    def print_model_summary(self, comparison_results: dict[str, Any]):
         """Print comprehensive model comparison summary."""
         
         print("\nmodel comparison summary")

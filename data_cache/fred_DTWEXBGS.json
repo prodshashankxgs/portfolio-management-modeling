@@ -24473,5 +24473,30 @@
     "date": "2025-07-11",
     "value": 120.3354,
     "series_id": "DTWEXBGS"
+  },
+  {
+    "date": "2025-07-14",
+    "value": 120.6252,
+    "series_id": "DTWEXBGS"
+  },
+  {
+    "date": "2025-07-15",
+    "value": 120.9095,
+    "series_id": "DTWEXBGS"
+  },
+  {
+    "date": "2025-07-16",
+    "value": 120.8232,
+    "series_id": "DTWEXBGS"
+  },
+  {
+    "date": "2025-07-17",
+    "value": 121.0417,
+    "series_id": "DTWEXBGS"
+  },
+  {
+    "date": "2025-07-18",
+    "value": 120.7674,
+    "series_id": "DTWEXBGS"
   }
 ]

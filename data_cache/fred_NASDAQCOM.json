@@ -32118,5 +32118,20 @@
     "date": "2025-07-17",
     "value": 20885.65,
     "series_id": "NASDAQCOM"
+  },
+  {
+    "date": "2025-07-18",
+    "value": 20895.66,
+    "series_id": "NASDAQCOM"
+  },
+  {
+    "date": "2025-07-21",
+    "value": 20974.17,
+    "series_id": "NASDAQCOM"
+  },
+  {
+    "date": "2025-07-22",
+    "value": 20892.68,
+    "series_id": "NASDAQCOM"
   }
 ]
